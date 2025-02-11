@@ -1,0 +1,17 @@
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#intro-screen{
+    background-image: url('images/Background.png');
+}
+
+h2, h1, p {
+    text-align: center; /* Keskittää tekstin vaakasuunnassa */
+    width: 100%;   /* Tekee elementeistä täysleveän */
+    position: relative;
+    margin: 20px 0; /* Lisää hieman marginaalia ylä- ja alapuolelle */
+}
+h3 {
+    margin: 10px 10px;
+}
