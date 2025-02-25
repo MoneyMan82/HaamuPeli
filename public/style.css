@@ -50,3 +50,20 @@ button {
     border-radius: 10px;
     cursor: pointer;
     }
+#game-screen{
+    display: none;
+}
+
+#game-board {
+    display: grid;
+    gap: 0px;
+    background-image: url('images/background.png');
+    background-size: cover;
+    background-position: center;
+    width: 50vw; 
+    height: 50vw; 
+    margin: 10px auto;
+    border: 2px solid #af8a4c;
+    padding: 0px;
+    background-color: rgba(221, 221, 221, 0.8);
+    }
