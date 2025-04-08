@@ -1,6 +1,7 @@
 let BOARD_SIZE = 18;
 const cellSize = calculateCellSize();
 let board;
+let player;
 
 document.getElementById("new-game-btn").addEventListener('click', startGame);
 
@@ -24,7 +25,7 @@ function startGame(){
 function generateRandomBoard(){
     const newBoard = Array.from({length: BOARD_SIZE}, ()=> Array(BOARD_SIZE).fill(' '));
     console.log(newBoard)
-
+    //Twhdään Ulkoseinät
     for(let y = 0; y < BOARD_SIZE; y++){
         for(let x = 0; x < BOARD_SIZE; x++){
             if(y == 0 || y == BOARD_SIZE-1 || x==0 || x== BOARD_SIZE -1){
@@ -32,8 +33,12 @@ function generateRandomBoard(){
             }
         }
     }
+    //Tehdään Pelilaudan Keskelle Esteet
     generateObstacles(newBoard);
-    return newBoard
+    //newBoard[6][7] = 'P'
+    const [playerX, playerY] = randomEmptyPosition(newBoard);
+    setCell(newBoard, playerX, playerY, 'P');
+    return newBoard;
 }
 
 function drawBoard(board){
@@ -53,6 +58,9 @@ function drawBoard(board){
 
             if(board[y][x]=='W'){
                 cell.classList.add('wall');
+            }
+            else if(board[y][x]=='P'){
+                cell.classList.add('player');
             }
             gameBoard.appendChild(cell);
         }
@@ -80,10 +88,10 @@ function generateObstacles(board){
         { startX: 10, startY: 10 },
         { startX: 13, startY: 14 },
 
-        { startX: 3, startY: 16},
+        /*{ startX: 3, startY: 16},
         { startX: 12, startY: 5},
         { startX: 12, startY: 10},
-        //{ startX: 16, startY: 5}
+        { startX: 16, startY: 5}*/
     ];
 
     //Arvotaan Este Jokaiseen Aloituspisteeseen
@@ -100,3 +108,28 @@ function placeObstacle(board, obstacle, startX, startY) {
         board[startY + y][startX + x] = 'W';
     }
 }
+//Tämä On Apufunktio Satunnaisen Kokonaisluvun Arpomista Varten
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function randomEmptyPosition(board){
+    x = randomInt(1, BOARD_SIZE - 2);
+    y = randomInt(1, BOARD_SIZE - 2);
+    if (getCell(board, x, y)  === ' ') {
+        return [x, y];
+    } else {
+    return randomEmptyPosition(board);
+    }
+
+}
+
+//Asetetaan solun sisältö
+function setCell(board, x, y, value) {
+    board[y][x] = value;
+ }
+//Palautetaan solun sisältö
+function getCell(board, x, y) {
+       return board[y][x];
+}
+
