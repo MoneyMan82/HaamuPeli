@@ -19,6 +19,18 @@ document.addEventListener('keydown', (event) => {
         case 'ArrowRight':
             player.move(1, 0); // Liikuta oikealle
             break;
+        case 'w':
+            shootAt(player.x, player.y - 1); // shoot up
+            break;
+        case 's':
+            shootAt(player.x, player.y + 1); // shoot down
+            break;
+        case 'a':
+            shootAt(player.x - 1, player.y); // shoot left
+            break;
+        case 'd':
+            shootAt(player.x + 1, player.y); // shoot right
+            break;
     }
     event.preventDefault(); // Prevent default scrolling behaviour
 });
@@ -87,6 +99,12 @@ function drawBoard(board){
             }
             else if(board[y][x]=='H'){
                 cell.classList.add('hornmonster');
+            }
+            else if(board[y][x]=='B'){
+                cell.classList.add('bullet');
+                setTimeout(() => {
+                    setCell(board, x, y, ' ') 
+                }, 500); // Ammus näkyy 500 ms
             }
             gameBoard.appendChild(cell);
         }
@@ -168,6 +186,11 @@ function generateGhosts(board){
         console.log(ghosts);
     }
 }
+
+function shootAt(x, y) {
+    setCell(board, x, y, 'B');
+    drawBoard(board);
+    }
 
 class Player{
     constructor(x, y){
