@@ -113,3 +113,14 @@ button {
     }
 }
 
+#score-board {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px;
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+}
+

@@ -6,6 +6,7 @@ let ghosts = [/*1,2,3,4,5*/];
 let ghostSpeed = 1000; // Aloitusnopeus haamuille (millisekunteina)
 let isGameRunning = false;
 let ghostInterval;
+let score = 0;
 
 document.getElementById("new-game-btn").addEventListener('click', startGame);
 document.addEventListener('keydown', (event) => {
@@ -206,6 +207,7 @@ function shootAt(x, y) {
     if (ghostIndex !== -1) {
         // Remove the ghost from the list
         ghosts.splice(ghostIndex, 1);
+        updateScoreBoard(50);
     }
     console.log(ghosts);
 
@@ -214,6 +216,7 @@ function shootAt(x, y) {
 
     if (ghosts.length === 0){
         alert('kaikki ammuttu');
+        startNextLevel();
     }
 }
 
@@ -336,5 +339,31 @@ function endGame() {
     // Show intro-view ja hide game-view
     document.getElementById('intro-screen').style.display = 'block';
     document.getElementById('game-screen').style.display = 'none';
+}
 
+function updateScoreBoard(points) {
+    const scoreBoard = document.getElementById('score-board');
+    score = score + points;
+
+    scoreBoard.textContent = `Pisteet: ${score}`;
+}
+
+function startNextLevel() {
+  alert('Level Up! Haamujen nopeus kasvaa.');
+
+  // Generoi uusi pelikenttä
+  board = generateRandomBoard();
+  drawBoard(board);
+
+  ghostSpeed = ghostSpeed*0.9;
+
+  // Pysäytä vanha intervalli ja käynnistä uusi nopeammin
+  clearInterval(ghostInterval);
+
+   //Haamut alkavat liikkumaan sekunnin päästä startin painamisesta
+   setTimeout(() => {
+    //Laitetaan haamut liikkumaan sekunnin välein
+    ghostInterval = setInterval(moveGhosts, ghostSpeed)
+    }, 1000);
+  
 }
